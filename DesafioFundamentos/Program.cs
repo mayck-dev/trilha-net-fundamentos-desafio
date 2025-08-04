@@ -1,35 +1,50 @@
 ﻿using DesafioFundamentos.Models;
 
-// Coloca o encoding para UTF8 para exibir acentuação
+// Define a codificação para UTF-8 (acentuação correta no console)
 Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-decimal precoInicial = 0;
-decimal precoPorHora = 0;
+// Variáveis para os preços
+decimal precoInicial;
+decimal precoPorHora;
 
-Console.WriteLine("Seja bem vindo ao sistema de estacionamento!\n" +
-                  "Digite o preço inicial:");
-precoInicial = Convert.ToDecimal(Console.ReadLine());
+// Boas-vindas e entrada de dados
+Console.WriteLine("=== Bem-vindo ao Sistema de Estacionamento ===\n");
 
-Console.WriteLine("Agora digite o preço por hora:");
-precoPorHora = Convert.ToDecimal(Console.ReadLine());
+// Entrada do preço inicial
+Console.Write("Digite o preço inicial: ");
+while (!decimal.TryParse(Console.ReadLine(), out precoInicial))
+{
+    Console.Write("Valor inválido. Digite um número válido para o preço inicial: ");
+}
 
-// Instancia a classe Estacionamento, já com os valores obtidos anteriormente
+// Entrada do preço por hora
+Console.Write("Digite o preço por hora: ");
+while (!decimal.TryParse(Console.ReadLine(), out precoPorHora))
+{
+    Console.Write("Valor inválido. Digite um número válido para o preço por hora: ");
+}
+
+// Cria o objeto estacionamento
 Estacionamento es = new Estacionamento(precoInicial, precoPorHora);
 
-string opcao = string.Empty;
+// Variáveis de controle do menu
 bool exibirMenu = true;
 
-// Realiza o loop do menu
 while (exibirMenu)
 {
     Console.Clear();
-    Console.WriteLine("Digite a sua opção:");
+    Console.WriteLine("=== Menu Principal ===");
     Console.WriteLine("1 - Cadastrar veículo");
     Console.WriteLine("2 - Remover veículo");
     Console.WriteLine("3 - Listar veículos");
     Console.WriteLine("4 - Encerrar");
+    Console.Write("Escolha uma opção: ");
+    
+    string opcao = Console.ReadLine();
 
-    switch (Console.ReadLine())
+    Console.Clear();
+
+    switch (opcao)
     {
         case "1":
             es.AdicionarVeiculo();
@@ -44,16 +59,20 @@ while (exibirMenu)
             break;
 
         case "4":
+            Console.WriteLine("Encerrando o programa...");
             exibirMenu = false;
             break;
 
         default:
-            Console.WriteLine("Opção inválida");
+            Console.WriteLine("Opção inválida. Por favor, escolha uma opção de 1 a 4.");
             break;
     }
 
-    Console.WriteLine("Pressione uma tecla para continuar");
-    Console.ReadLine();
+    if (exibirMenu)
+    {
+        Console.WriteLine("\nPressione qualquer tecla para voltar ao menu...");
+        Console.ReadKey();
+    }
 }
 
-Console.WriteLine("O programa se encerrou");
+Console.WriteLine("\nPrograma finalizado. Obrigado por usar o sistema!");
